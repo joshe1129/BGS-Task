@@ -1,24 +1,28 @@
 using UnityEngine;
 using System;
 using static Items;
+using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour, IShopCustomer
 {
     private int goldAmount = 300;
-    public event EventHandler OnGoldAmountChanged;
+    public event EventHandler OnGoldAmountChanged; // Event triggered when gold amount changes
     private SpriteRenderer bodySpriteRenderer;
-    [SerializeField] private Texture2D skinsTexture;
+    [SerializeField] private Texture2D skinsTexture; // Texture containing player skins
     [SerializeField] InventoryManager inventoryManager;
-    private bool nearShopKeeper = false;
+    private bool nearShopKeeper = false;  // Flag indicating if the player is near a shopkeeper
 
     private void Awake()
     {
+        // Get the SpriteRenderer component of the player's body
         bodySpriteRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
         if (bodySpriteRenderer == null)
         {
-            Debug.LogError("No se encontró el componente SpriteRenderer en el objeto body.");
+            Debug.LogError("SpriteRenderer component not found on the body object.");
         }
     }
+
+    // Equip default items when the game starts
     private void Start()
     {
         BoughtItem(Items.shopItems.shirt_1);
@@ -27,74 +31,32 @@ public class Player : MonoBehaviour, IShopCustomer
 
     void Update()
     {
-        // Verifica si la tecla "I" ha sido presionada
+        // Toggle inventory display when "I" key is pressed
         if (Input.GetKeyDown(KeyCode.I))
         {
-            // Activa o muestra el inventario si está desactivado o oculto, y viceversa
             inventoryManager.ShowInventory(this, !inventoryManager.gameObject.activeSelf);
         }
     }
 
+    // Get the player's current gold amount
     public int GetGoldAmount() 
     { 
         return goldAmount;
     }
 
-    public bool IsNearShopKeeper() { return nearShopKeeper; }
+    // Equip the specified item to the player
     public void EquipItem(Items.shopItems itemID)
     {
-        switch (itemID)
-        {
-            case shopItems.shirtNone: break;
-            case shopItems.shirt_1:
-                inventoryManager.CreateShirtButton(itemID, Items.Getsprite(Items.shopItems.shirt_1), "Shirt 1", Items.GetCost(Items.shopItems.shirt_1));
-                EquipShirt(itemID);
-                break;
-            case shopItems.shirt_2:
-                inventoryManager.CreateShirtButton(itemID, Items.Getsprite(Items.shopItems.shirt_2), "Shirt 2", Items.GetCost(Items.shopItems.shirt_2));
-                EquipShirt(itemID); 
-                break;
-            case shopItems.shirt_3: 
-                inventoryManager.CreateShirtButton(itemID, Items.Getsprite(Items.shopItems.shirt_3), "Shirt 3", Items.GetCost(Items.shopItems.shirt_3)); 
-                EquipShirt(itemID); 
-                break;
-            case shopItems.shirt_4:
-                inventoryManager.CreateShirtButton(itemID, Items.Getsprite(Items.shopItems.shirt_4), "Shirt 4", Items.GetCost(Items.shopItems.shirt_3));
-                EquipShirt(itemID); 
-                break;
-            case shopItems.pantsNone: break;
-            case shopItems.pants_1:
-                inventoryManager.CreatePantButton(itemID, Items.Getsprite(Items.shopItems.pants_1), "Pants 1", Items.GetCost(Items.shopItems.pants_1));
-                EquipPants(itemID);
-                break;
-            case shopItems.pants_2:
-                inventoryManager.CreatePantButton(itemID, Items.Getsprite(Items.shopItems.pants_2), "Pants 2", Items.GetCost(Items.shopItems.pants_2));
-                EquipPants(itemID);
-                break;
-            case shopItems.pants_3:
-                inventoryManager.CreatePantButton(itemID, Items.Getsprite(Items.shopItems.pants_3), "Pants 3", Items.GetCost(Items.shopItems.pants_3));
-                EquipPants(itemID); 
-                break;
-            case shopItems.pants_4:
-                inventoryManager.CreatePantButton(itemID, Items.Getsprite(Items.shopItems.pants_4), "Pants 4", Items.GetCost(Items.shopItems.pants_4));
-                EquipPants(itemID); 
-                break;
-            default: break;
-        }
-    }
-    public void EquipShirt(Items.shopItems itemID)
-    {
-        if (bodySpriteRenderer != null)
+        if (bodySpriteRenderer == null) return;
+            
+        if (itemID < Items.shopItems.pantsNone)
         {
             Texture2D spriteSheetTexture = (Texture2D)bodySpriteRenderer.sprite.texture;
             Color[] bodySpriteSheet = skinsTexture.GetPixels(0, 43 + (32 * ((int)itemID - 1)), 180, 7);
             spriteSheetTexture.SetPixels(0, 139, 180, 7, bodySpriteSheet);
             spriteSheetTexture.Apply();
         }
-    }
-    public void EquipPants(Items.shopItems itemID)
-    {
-        if (bodySpriteRenderer != null)
+        else
         {
             Texture2D spriteSheetTexture = (Texture2D)bodySpriteRenderer.sprite.texture;
             Color[] legsTexture = skinsTexture.GetPixels(0, 32 + (32 * ((int)itemID - 6)), 180, 11);
@@ -102,10 +64,15 @@ public class Player : MonoBehaviour, IShopCustomer
             spriteSheetTexture.Apply();
         }
     }
+
+    // Handle buying an item: Create an inventory button for the bought item and equip it
     public void BoughtItem(Items.shopItems itemID)
     {
+        inventoryManager.CreateInventoryButton(itemID);
         EquipItem(itemID);
     }
+
+    // Attempt to buy an item: // Check if has enough gold, subtract the gold and trigger the event
     public bool TryBoughtItem(int spendGoldAmount)
     {
         if (GetGoldAmount() >= spendGoldAmount) 
@@ -117,13 +84,15 @@ public class Player : MonoBehaviour, IShopCustomer
         else { return false; }
     }
 
+    // Set the flag indicating if the player is near a shopkeeper
     public void SetNearShop(bool isNearShop)
     {
         nearShopKeeper = isNearShop;
-        inventoryManager.ShowInventory(this, nearShopKeeper);
+        inventoryManager.ShowInventory(this, nearShopKeeper); // Show or hide the inventory based on the player's proximity to the shopkeeper
     }
 
-    public bool TrySelltItem(int earnGoldAmount)
+    // Attempt to sell an item: Add earned gold, trigger the gold event and if not near equip the item
+    public bool TrySelltItem(int earnGoldAmount, Items.shopItems itemID)
     {
         if (nearShopKeeper)
         {
@@ -131,7 +100,9 @@ public class Player : MonoBehaviour, IShopCustomer
             OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }
-        else { return false; }
+        else {
+            EquipItem(itemID);
+            return false; 
+        }
     }
-
 }

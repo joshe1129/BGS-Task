@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Items
 {
+    // Enum to represent different shop items
     public enum shopItems
     {
         shirtNone,
@@ -15,6 +16,8 @@ public class Items
         pants_3,
         pants_4
     }
+
+    //Get the cost of a shop item
     public static int GetCost(shopItems item)
     {
         switch (item)
@@ -32,6 +35,8 @@ public class Items
             default: return 0;
         }
     }
+
+    //Get the sprite of a shop item
     public static Sprite Getsprite(shopItems item)
     {
         switch (item)
@@ -49,6 +54,4 @@ public class Items
             default: return GameAssets.instance.shirtNone;
         }
     }
-
-
 }

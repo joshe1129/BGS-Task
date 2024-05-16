@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     private Transform pantsWnd;
     private IShopCustomer shopCustomer;
 
+    // Find references to shirt and pants panels, and disable the item template
     private void Awake()
     {
         shirtWnd = transform.Find("ShirtsPnl");
@@ -20,33 +21,38 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    // Create item buttons for shirts and pants, and hide the shop
     private void Start()
     {
-        CreateItemButton(Items.shopItems.shirt_1, Items.Getsprite(Items.shopItems.shirt_1), "Shirt 1", Items.GetCost(Items.shopItems.shirt_1), shirtWnd);
-        CreateItemButton(Items.shopItems.shirt_2, Items.Getsprite(Items.shopItems.shirt_2), "Shirt 2", Items.GetCost(Items.shopItems.shirt_2), shirtWnd);
-        CreateItemButton(Items.shopItems.shirt_3, Items.Getsprite(Items.shopItems.shirt_3), "Shirt 3", Items.GetCost(Items.shopItems.shirt_3), shirtWnd);
-        CreateItemButton(Items.shopItems.shirt_4, Items.Getsprite(Items.shopItems.shirt_4), "Shirt 4", Items.GetCost(Items.shopItems.shirt_4), shirtWnd);
+        CreateItemButton(Items.shopItems.shirt_1, "Shirt 1", shirtWnd);
+        CreateItemButton(Items.shopItems.shirt_2, "Shirt 2", shirtWnd);
+        CreateItemButton(Items.shopItems.shirt_3, "Shirt 3", shirtWnd);
+        CreateItemButton(Items.shopItems.shirt_4, "Shirt 4", shirtWnd);
 
-        CreateItemButton(Items.shopItems.pants_1, Items.Getsprite(Items.shopItems.pants_1), "Pants 1", Items.GetCost(Items.shopItems.pants_1), pantsWnd);
-        CreateItemButton(Items.shopItems.pants_2, Items.Getsprite(Items.shopItems.pants_2), "Pants 2", Items.GetCost(Items.shopItems.pants_2), pantsWnd);
-        CreateItemButton(Items.shopItems.pants_3, Items.Getsprite(Items.shopItems.pants_3), "Pants 3", Items.GetCost(Items.shopItems.pants_3), pantsWnd);
-        CreateItemButton(Items.shopItems.pants_4, Items.Getsprite(Items.shopItems.pants_4), "Pants 4", Items.GetCost(Items.shopItems.pants_4), pantsWnd);
+        CreateItemButton(Items.shopItems.pants_1, "Pants 1", pantsWnd);
+        CreateItemButton(Items.shopItems.pants_2, "Pants 2", pantsWnd);
+        CreateItemButton(Items.shopItems.pants_3, "Pants 3", pantsWnd);
+        CreateItemButton(Items.shopItems.pants_4, "Pants 4", pantsWnd);
 
         HideShop();
     }
 
-    private void CreateItemButton(Items.shopItems itemID, Sprite itemSprite, string intemName, int itemCost, Transform clotheWnd)
+    // Create an item button for a specific item
+    private void CreateItemButton(Items.shopItems itemID, string itemName, Transform clotheWnd)
     {
+        Sprite itemSprite = Items.Getsprite(itemID);
+        int itemCost = Items.GetCost(itemID);
+
         Transform itemTransform = Instantiate(shopItemTemplate, clotheWnd);
-        itemTransform.Find("ItemNameTxt").GetComponent<TMP_Text>().text = intemName;
+        itemTransform.Find("ItemNameTxt").GetComponent<TMP_Text>().text = itemName;
         itemTransform.Find("ItemCostTxt").GetComponent<TMP_Text>().text = itemCost.ToString() + "$";
         itemTransform.Find("ItemImg").GetComponent<Image>().sprite = itemSprite;
         itemTransform.gameObject.SetActive(true);
-
         itemTransform.GetComponent<Button>().onClick.AddListener(() => TryBuyItem(itemID));
-        
     }
 
+
+    // Try to buy an item when the button is clicked
     private void TryBuyItem(Items.shopItems itemID)
     {
         if (shopCustomer.TryBoughtItem(Items.GetCost(itemID)))
@@ -55,15 +61,16 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    // Show the shop
     public void ShowShop(IShopCustomer shopCustomer)
     {
         this.shopCustomer = shopCustomer;
         gameObject.SetActive(true);
     }
+
+    // Hide the shop
     public void HideShop()
     {
         gameObject.SetActive(false);
     }
-
-
 }

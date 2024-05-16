@@ -4,6 +4,7 @@ public class GameAssets : MonoBehaviour
 {
     private static GameAssets _instance;
 
+    // Singleton pattern to ensure only one instance of GameAssets exists
     public static GameAssets instance
     {
         get
@@ -13,6 +14,7 @@ public class GameAssets : MonoBehaviour
         }
     }
 
+    // Sprites for different clothing options
     public Sprite shirtNone;
     public Sprite shirt_1;
     public Sprite shirt_2;

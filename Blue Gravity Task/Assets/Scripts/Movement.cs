@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -14,6 +12,7 @@ public class Movement : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
     }
 
+    // Get movement input from the player and update Animator parameters
     void Update()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -27,6 +26,7 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Move the player based on moveInput and speed using Rigidbody2D 
         if (playerRB != null)
         {
             playerRB.MovePosition(playerRB.position + moveInput * speed * Time.fixedDeltaTime);
