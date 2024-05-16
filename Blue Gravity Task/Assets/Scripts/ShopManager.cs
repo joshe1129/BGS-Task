@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
-public class UI_Shop : MonoBehaviour
+public class ShopManager : MonoBehaviour
 {
     [SerializeField] private Transform shopItemTemplate;
     private Transform shirtWnd;
