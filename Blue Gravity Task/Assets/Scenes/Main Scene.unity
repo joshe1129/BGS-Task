@@ -818,10 +818,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 158910299}
+  - component: {fileID: 158910300}
   - component: {fileID: 158910298}
   - component: {fileID: 158910297}
   - component: {fileID: 158910301}
-  - component: {fileID: 158910300}
+  - component: {fileID: 158910302}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -953,6 +954,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+--- !u!114 &158910302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158910296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ab13051f6e00748be6770681a7bcbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinsTexture: {fileID: 2800000, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
 --- !u!1 &161816832
 GameObject:
   m_ObjectHideFlags: 0
@@ -3748,6 +3762,7 @@ GameObject:
   - component: {fileID: 662369563}
   - component: {fileID: 662369565}
   - component: {fileID: 662369564}
+  - component: {fileID: 662369566}
   m_Layer: 5
   m_Name: HUD_Panel
   m_TagString: Untagged
@@ -3813,6 +3828,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662369562}
   m_CullTransparentMesh: 1
+--- !u!114 &662369566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662369562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4a52fdaa9beb248a9cd32cf360232e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 158910302}
+  goldText: {fileID: 437955627}
 --- !u!1 &680988140
 GameObject:
   m_ObjectHideFlags: 0
@@ -5409,6 +5438,7 @@ GameObject:
   - component: {fileID: 1052224784}
   - component: {fileID: 1052224783}
   - component: {fileID: 1052224785}
+  - component: {fileID: 1052224786}
   m_Layer: 0
   m_Name: Npc_Shopkeeper
   m_TagString: Untagged
@@ -5515,7 +5545,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1}
+  m_Offset: {x: 0.5, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5526,8 +5556,21 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 3.5}
+  m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &1052224786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052224782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93cf4ac568d16ed45b6f0cf3a6abb7d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiShop: {fileID: 215292928}
 --- !u!1 &1075720113
 GameObject:
   m_ObjectHideFlags: 0

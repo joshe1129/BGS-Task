@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shirtNone: {fileID: 0}
-  shirt_1: {fileID: -1897674485, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
-  shirt_2: {fileID: -635776996, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
-  shirt_3: {fileID: 1588854907, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
-  shirt_4: {fileID: -1144589368, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  shirt_1: {fileID: -1144589368, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  shirt_2: {fileID: 1588854907, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  shirt_3: {fileID: -635776996, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  shirt_4: {fileID: -1897674485, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
   pantsNone: {fileID: 0}
-  pants_1: {fileID: 1533830274, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
-  pants_2: {fileID: -573055753, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
-  pants_3: {fileID: -1406730638, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
-  pants_4: {fileID: 427784975, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  pants_1: {fileID: 427784975, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  pants_2: {fileID: -1406730638, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  pants_3: {fileID: -573055753, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
+  pants_4: {fileID: 1533830274, guid: c2465fc5c58710a4daa052350c4087ce, type: 3}
