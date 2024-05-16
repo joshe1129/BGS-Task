@@ -1,7 +1,5 @@
 using UnityEngine;
 using System;
-using static Items;
-using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour, IShopCustomer
 {
